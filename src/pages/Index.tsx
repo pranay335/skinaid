@@ -13,7 +13,7 @@ const Index = () => {
           <div className="flex items-center space-x-2">
             <Stethoscope className="w-8 h-8 text-primary" />
             <span className="text-2xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-              DermAI
+              SkinAid
             </span>
           </div>
           <div className="flex items-center space-x-4">
@@ -43,7 +43,7 @@ const Index = () => {
         <div className="container mx-auto px-4 text-center relative z-10">
           <div className="animate-slide-up">
             <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
-              Advanced Skin Disease Classification
+              Skin Disease Classification
             </h1>
             <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-3xl mx-auto">
               Harness the power of AI to get instant, accurate skin condition analysis. 
@@ -71,7 +71,7 @@ const Index = () => {
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold mb-4 text-foreground">
-              Professional Medical AI
+              Medical AI
             </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
               State-of-the-art technology for accurate skin condition analysis

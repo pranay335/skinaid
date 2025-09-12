@@ -117,7 +117,7 @@ const ChatbotInterface = () => {
           <div className="flex items-center space-x-2 mb-4">
             <Stethoscope className="w-8 h-8 text-primary" />
             <span className="text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-              DermAI Chat
+            AI CHAT
             </span>
           </div>
           <Button className="w-full btn-medical">
