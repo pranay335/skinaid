@@ -3,7 +3,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { useState, createContext, useContext, ReactNode } from "react";
+import { useState, createContext, useContext, ReactNode, useEffect } from "react";
 import Index from "./pages/Index";
 import ClassifyImage from "./pages/ClassifyImage";
 import Login from "./pages/Login";
@@ -16,7 +16,8 @@ const queryClient = new QueryClient();
 // Auth Context for managing authentication state
 interface AuthContextType {
   isAuthenticated: boolean;
-  login: (email: string, password: string) => void;
+  // login now accepts token and user object returned from backend
+  login: (token: string, user: any) => Promise<boolean> | boolean;
   logout: () => void;
 }
 
@@ -31,14 +32,40 @@ export const useAuth = () => {
 };
 
 const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 
-  const login = (email: string, password: string) => {
-    // Mock authentication - in real app, this would validate credentials
-    setIsAuthenticated(true);
+  // Initialize auth state from localStorage
+  useEffect(() => {
+    try {
+      const token = localStorage.getItem("token");
+      if (token) {
+        setIsAuthenticated(true);
+      }
+    } catch (e) {
+      // ignore
+    }
+  }, []);
+
+  const login = async (token: string, user: any) => {
+    try {
+      // Persist token and user info
+      localStorage.setItem("token", token);
+      localStorage.setItem("user", JSON.stringify(user));
+      setIsAuthenticated(true);
+      return true;
+    } catch (error) {
+      console.error("Auth login error:", error);
+      return false;
+    }
   };
 
   const logout = () => {
+    try {
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+    } catch (e) {
+      // ignore
+    }
     setIsAuthenticated(false);
   };
 

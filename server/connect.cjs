@@ -30,7 +30,7 @@ app.get("/", (req, res) => {
   res.send("🚀 Backend server is running!");
 });
 
-// --- NEW REGISTRATION ROUTE ---
+// --- REGISTRATION ROUTE ---
 app.post("/api/auth/register", async (req, res) => {
   try {
     const { firstName, lastName, email, password } = req.body;
@@ -61,14 +61,14 @@ app.post("/api/auth/register", async (req, res) => {
     // 5. Save the user to the database
     const savedUser = await newUser.save();
 
-    // 6. (Optional but Recommended) Create a JWT token for immediate login
+    // 6. Create a JWT token for immediate login
     const token = jwt.sign({ id: savedUser._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
     // 7. Send a success response
     res.status(201).json({
       message: "User registered successfully!",
       token,
-      user: { // Changed "User" to "user" for consistency with frontend code
+      user: {
         id: savedUser._id,
         firstName: savedUser.firstName,
         email: savedUser.email
@@ -92,13 +92,57 @@ app.get("/api/users", async (req, res) => {
   }
 });
 
-// Your login route should also be updated to use bcrypt to compare passwords
+// LOGIN ROUTE ---
 app.post("/api/auth/login", async (req, res) => {
-  // This is a placeholder - you'll need to implement password comparison here!
-  const { email } = req.body;
-  const user = await User.findOne({ email });
-  if (user) res.json({ message: "Login successful", user });
-  else res.status(401).json({ message: "User not found" });
+  try {
+    const { email, password } = req.body;
+
+    // 1. Validate input
+    if (!email || !password) {
+      return res.status(400).json({ message: "Please provide email and password." });
+    }
+
+    // 2. Find user by email
+    const user = await User.findOne({ email });
+    if (!user) {
+      // For security, use a generic error message
+      return res.status(401).json({ message: "Invalid credentials. Please try again." });
+    }
+
+    // 3. Compare the provided password with the stored hashed password
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(401).json({ message: "Invalid credentials. Please try again." });
+    }
+
+    // 4. If credentials are correct, create a JWT token with additional claims
+    const token = jwt.sign(
+      { 
+        id: user._id,
+        email: user.email,
+        isAuthenticated: true
+      }, 
+      process.env.JWT_SECRET, 
+      { expiresIn: '24h' }
+    );
+
+    // 5. Send a success response with token and user info (excluding password)
+    res.status(200).json({
+      success: true,
+      message: "Login successful!",
+      token,
+      user: {
+        id: user._id,
+        firstName: user.firstName,
+        email: user.email,
+        isAuthenticated: true
+      }
+    });
+
+  } catch (error) {
+    console.error("Login Error:", error);
+    res.status(500).json({ message: "Server error during login." });
+  }
 });
 
 // Keep server alive
