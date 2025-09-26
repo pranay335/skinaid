@@ -23,7 +23,7 @@ const Index = () => {
             <Link to="/login">
               <Button variant="outline">Login</Button>
             </Link>
-            <Link to="/register">
+            <Link to="/chatbot">
               <Button className="btn-medical">Get Started</Button>
             </Link>
           </div>
@@ -33,9 +33,9 @@ const Index = () => {
       {/* Hero Section */}
       <section className="relative py-20 overflow-hidden">
         <div className="absolute inset-0">
-          <img 
-            src={heroImage} 
-            alt="Professional medical environment with dermatology equipment" 
+          <img
+            src={heroImage}
+            alt="Professional medical environment with dermatology equipment"
             className="w-full h-full object-cover opacity-20"
           />
           <div className="absolute inset-0 hero-gradient opacity-30"></div>
@@ -46,7 +46,7 @@ const Index = () => {
               Skin Disease Classification
             </h1>
             <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-3xl mx-auto">
-              Harness the power of AI to get instant, accurate skin condition analysis. 
+              Harness the power of AI to get instant, accurate skin condition analysis.
               Upload an image and receive professional-grade diagnostic insights.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
@@ -85,7 +85,7 @@ const Index = () => {
               </CardHeader>
               <CardContent>
                 <CardDescription>
-                  Advanced machine learning algorithms trained on thousands of dermatological cases 
+                  Advanced machine learning algorithms trained on thousands of dermatological cases
                   for accurate disease classification.
                 </CardDescription>
               </CardContent>
@@ -97,7 +97,7 @@ const Index = () => {
               </CardHeader>
               <CardContent>
                 <CardDescription>
-                  Your medical data is protected with enterprise-grade security 
+                  Your medical data is protected with enterprise-grade security
                   and full HIPAA compliance standards.
                 </CardDescription>
               </CardContent>
@@ -109,7 +109,7 @@ const Index = () => {
               </CardHeader>
               <CardContent>
                 <CardDescription>
-                  Get comprehensive analysis results in seconds, not hours. 
+                  Get comprehensive analysis results in seconds, not hours.
                   Fast, reliable, and always available.
                 </CardDescription>
               </CardContent>

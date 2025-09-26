@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Stethoscope, User, Mail, Lock, ArrowLeft, Shield } from "lucide-react";
-import { useAuth } from "@/App";
+import { useAuth } from "../App";
 import { useToast } from "@/hooks/use-toast";
 
 const Register = () => {
@@ -33,6 +33,7 @@ const Register = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
+    // --- Front-end validation remains the same ---
     if (!formData.firstName || !formData.lastName || !formData.email || !formData.password) {
       toast({
         title: "Missing information",
@@ -62,26 +63,48 @@ const Register = () => {
 
     setIsLoading(true);
 
-    // Simulate registration delay
-    await new Promise(resolve => setTimeout(resolve, 2000));
-
+    // --- API CALL TO BACKEND ---
     try {
-      // In a real app, you'd register the user first, then log them in
-      login(formData.email, formData.password);
+      const response = await fetch("http://localhost:5000/api/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          email: formData.email,
+          password: formData.password,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        // If response is not 2xx, throw an error to be caught by the catch block
+        throw new Error(data.message || "Something went wrong");
+      }
+      
+      // If registration is successful, log the user in using the token from the backend
+      // Note: your login function in useAuth might need to be adjusted to accept a token
+      login(data.token, data.user); 
+
       toast({
         title: "Account created successfully!",
         description: "Welcome to DermAI. Your account has been created.",
       });
+
       navigate("/chatbot");
-    } catch (error) {
+
+    } catch (error: any) {
       toast({
         title: "Registration failed",
-        description: "Unable to create account. Please try again.",
+        description: error.message || "Unable to create account. Please try again.",
         variant: "destructive",
       });
+    } finally {
+        setIsLoading(false);
     }
-    
-    setIsLoading(false);
   };
 
   return (
@@ -235,3 +258,4 @@ const Register = () => {
 };
 
 export default Register;
+

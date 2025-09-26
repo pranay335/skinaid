@@ -16,40 +16,29 @@ const Login = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    if (!email || !password) {
-      toast({
-        title: "Missing credentials",
-        description: "Please enter both email and password.",
-        variant: "destructive",
-      });
-      return;
-    }
+const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+  setIsLoading(true);
 
-    setIsLoading(true);
+  try {
+    const user = await login(email, password); // call AuthContext login
+    toast({
+      title: "Welcome back!",
+      description: `Hello you have successfully logged in.`
+    });
+    navigate("/chatbot");
+  }
+   catch (err: any) {
+    toast({
+      title: "Login failed",
+      description: err.message || "Invalid credentials",
+      variant: "destructive",
+    });
+  }
 
-    // Simulate authentication delay
-    await new Promise(resolve => setTimeout(resolve, 1500));
+  setIsLoading(false);
+};
 
-    try {
-      login(email, password);
-      toast({
-        title: "Welcome back!",
-        description: "You have successfully logged in.",
-      });
-      navigate("/chatbot");
-    } catch (error) {
-      toast({
-        title: "Login failed",
-        description: "Invalid credentials. Please try again.",
-        variant: "destructive",
-      });
-    }
-    
-    setIsLoading(false);
-  };
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
@@ -93,7 +82,7 @@ const Login = () => {
                   <Input
                     id="email"
                     type="email"
-                    placeholder="doctor@example.com"
+                    placeholder="@gmail.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     className="transition-all duration-300 focus:shadow-[var(--shadow-medical)]"
