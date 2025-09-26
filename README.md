@@ -12,7 +12,7 @@ npm run dev
 Edit a file directly in GitHub
 
 
-#To run server 
+# To run server 
 1.open terminal path ={ cd skinaid - cd backend -cd server }
 2.npm start
 
