@@ -133,7 +133,7 @@ const Login = () => {
         >
           <Stethoscope className="w-24 h-24 mx-auto text-primary" />
           <h1 className="mt-6 text-4xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-            Welcome Back to DermAI
+            Welcome Back to SkinAid
           </h1>
           <p className="mt-4 text-lg text-muted-foreground">
             Sign in to continue your journey to better skin health.

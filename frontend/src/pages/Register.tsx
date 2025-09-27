@@ -94,7 +94,7 @@ const Register = () => {
 
       toast({
         title: "Account created successfully!",
-        description: "Welcome to DermAI. Your account has been created.",
+        description: "Welcome to SkinAid. Your account has been created.",
       });
 
       navigate("/chatbot");
@@ -146,7 +146,7 @@ const Register = () => {
         >
           <Stethoscope className="w-24 h-24 mx-auto text-primary" />
           <h1 className="mt-6 text-4xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-            Welcome to DermAI
+            Welcome to SkinAid
           </h1>
           <p className="mt-4 text-lg text-muted-foreground">
             Your personal AI-powered dermatology assistant. Create an account to get started.
@@ -173,7 +173,7 @@ const Register = () => {
               </motion.div>
               <CardTitle className="text-2xl font-bold">Create an Account</CardTitle>
               <CardDescription>
-                Join DermAI to access advanced AI-powered skin analysis.
+                Join SkinAid to access advanced AI-powered skin analysis.
               </CardDescription>
             </CardHeader>
             <CardContent>

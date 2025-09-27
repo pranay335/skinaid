@@ -143,10 +143,10 @@ const Index = () => {
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-center space-x-2 mb-4">
             <Stethoscope className="w-6 h-6 text-primary" />
-            <span className="text-xl font-bold">DermAI</span>
+            <span className="text-xl font-bold">SkinAid</span>
           </div>
           <p className="text-center text-muted-foreground">
-            © 2024 DermAI. Professional skin disease classification powered by AI.
+            © 2025 SkinAid. Professional skin disease classification powered by AI.
           </p>
         </div>
       </footer>
